@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import defaultHome from "@/constant/defaultHome";
+import defaultHome from "../../constant/defaultHome";
 
 export default {
   name: "Home",
