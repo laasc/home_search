@@ -45,17 +45,17 @@
 
     <div class="fix_group">
       <a-switch checked-children="白底" un-checked-children="透明" default-checked />
-      <a-tooltip placement="top">
+      <a-tooltip placement="top" >
         <template slot="title">
           <span>切换背景图</span>
         </template>
-        <a-button type="primary" shape="round" icon="picture" size="small" style="margin-left:12px;"/>
+        <a-button @click="development" type="primary" shape="round" icon="picture" size="small" style="margin-left:12px;"/>
       </a-tooltip>
-      <a-tooltip placement="top">
+      <a-tooltip placement="top" >
         <template slot="title">
           <span>设为主页</span>
         </template>
-        <a-button type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>
+        <a-button @click="development" type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>
       </a-tooltip>
 
     </div>
@@ -107,6 +107,10 @@ export default {
     // 切换logo
     changeSearchLogo() {
       this.isBaidu = !this.isBaidu;
+    },
+
+    development() {
+      alert("别急，还在开发中")
     },
 
     // 搜索
