@@ -1,8 +1,8 @@
 <template>
   <div class="card_wrapper">
     <!-- 搜索logo -->
-    <div class="search_logo_container" >
-      <img class="search_logo" @click="changeSearchLogo"  v-if="isBaidu" src="~@/assets/images/baidu.png" alt="百度">
+    <div class="search_logo_container">
+      <img class="search_logo" @click="changeSearchLogo" v-if="isBaidu" src="~@/assets/images/baidu.png" alt="百度">
       <img class="search_logo" @click="changeSearchLogo" v-else src="~@/assets/images/google.png" alt="谷歌">
     </div>
 
@@ -22,12 +22,34 @@
       <div class="search_tips">tips: 按 Ctrl 键自动对焦搜索框，按 Enter 键自动搜索</div>
     </div>
 
-    <div class="mask" v-show="maskOpen"></div>
+    <!-- 快捷卡 -->
+    <div class="card_fast_wrapper">
+      <div class="card_fast">
+        <a-card>
+          <a :href="resource.link" target="_blank" v-for="(resource, index) in linkDataList" :key="index">
+          <a-card-grid style="width:25%;text-align:center" >
+
+            <a-avatar
+                shape="square"
+                :src="resource.icon"
+            />
+              <div class="resource-name"></div>
+            {{ resource.name }}
+
+          </a-card-grid>
+          </a>
+        </a-card>
+      </div>
+    </div>
+
+    <div :class="maskOpen?'mask':'hidden'"></div>
     <img class="bg_img" src="~@/covers/comic/cover_7.jpg" alt="bg">
   </div>
 </template>
 
 <script>
+import defaultHome from "@/constant/defaultHome";
+
 export default {
   name: "Home",
   data() {
@@ -35,6 +57,7 @@ export default {
       isBaidu: true,
       searchValue: "", //搜索框内容
       maskOpen: false, // mask
+      linkDataList: defaultHome.keyContentMap.myLike
     }
   },
   created() {
@@ -46,8 +69,8 @@ export default {
       let that = this;
       document.onkeydown = function (event) {
         let e = event || window.event;
-        if(e.key === "Control") {
-            that.setMaskOpen()
+        if (e.key === "Control") {
+          that.setMaskOpen()
         }
 
       }
