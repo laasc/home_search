@@ -1,4 +1,5 @@
 
+
 // 禁止右键
 document.addEventListener("contextmenu", function () {
   return false;

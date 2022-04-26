@@ -19,7 +19,7 @@
           @focus="setMaskOpen"
           @blur="maskOpen = false"
       />
-      <div class="search_tips">tips: 按 Ctrl 键自动对焦搜索框，按 Enter 键自动搜索</div>
+      <div class="search_tips" :class="maskOpen?'mask_tips':''">tips: 按 Ctrl 键自动对焦搜索框，再次按 Ctrl 键解除搜索框对焦，按 Enter 键自动搜索</div>
     </div>
 
     <!-- 快捷卡 -->
@@ -33,13 +33,31 @@
                 shape="square"
                 :src="resource.icon"
             />
-              <div class="resource-name"></div>
-            {{ resource.name }}
+              <div class="resource-name">{{ resource.name }}</div>
+
 
           </a-card-grid>
           </a>
         </a-card>
       </div>
+    </div>
+
+
+    <div class="fix_group">
+      <a-switch checked-children="白底" un-checked-children="透明" default-checked />
+      <a-tooltip placement="top">
+        <template slot="title">
+          <span>切换背景图</span>
+        </template>
+        <a-button type="primary" shape="round" icon="picture" size="small" style="margin-left:12px;"/>
+      </a-tooltip>
+      <a-tooltip placement="top">
+        <template slot="title">
+          <span>设为主页</span>
+        </template>
+        <a-button type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>
+      </a-tooltip>
+
     </div>
 
     <div :class="maskOpen?'mask':'hidden'"></div>
@@ -48,7 +66,7 @@
 </template>
 
 <script>
-import defaultHome from "../../constant/defaultHome";
+import defaultHome from "@/constant/defaultHome";
 
 export default {
   name: "Home",
@@ -75,11 +93,16 @@ export default {
 
       }
     },
-
     // 设置聚焦背景
     setMaskOpen() {
-      this.$refs.search_input.focus();
-      this.maskOpen = true
+      if(this.maskOpen) {
+        this.$refs.search_input.blur();
+        this.maskOpen = false
+      }else {
+        this.$refs.search_input.focus();
+        this.maskOpen = true
+      }
+
     },
     // 切换logo
     changeSearchLogo() {

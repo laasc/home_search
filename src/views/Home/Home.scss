@@ -10,10 +10,10 @@
     text-align: center;
     margin: 0px 0 34px;
     .search_logo {
-      width: 210px;
+      width: 180px;
       cursor: pointer;
       border-radius: 5px;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.05);
       padding: 16px;
       box-sizing: content-box !important;
     }
@@ -24,13 +24,11 @@
 
   // 搜索框
   .search_wrapper {
-    width: 640px;
+    width: 720px;
     max-width: 90%;
     margin: 0 auto 70px;
     .search_tips {
       text-align: left;
-      max-width: 600px;
-      width: 70%;
       margin-top: 15px;
       color: #000000;
     }
@@ -116,6 +114,16 @@
     z-index: -100;
   }
 
+
+  // 按钮组
+  .fix_group {
+    position: fixed !important;
+    bottom:35px;
+    right: 35px;
+
+  }
+
+
   // 蒙层
   .mask {
     position: fixed;
@@ -127,6 +135,10 @@
     z-index: -50;
     transition: all;
     transition-duration: 600ms;
+  }
+
+  .mask_tips {
+    color: #fff !important;
   }
   .hidden {
     transition: all;
@@ -173,5 +185,12 @@
   }
   /deep/ .ant-card-bordered {
     border: none;
+  }
+
+
+  @media screen and (max-width: 480px) {
+    .resource-name {
+      display: none;
+    }
   }
 }
