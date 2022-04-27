@@ -4,6 +4,8 @@ import router from './router'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import "@/assets/css/normalize.css";
+import 'amfe-flexible';
+
 Vue.config.productionTip = false
 Vue.use(Antd)
 new Vue({

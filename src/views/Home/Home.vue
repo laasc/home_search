@@ -34,8 +34,6 @@
                 :src="resource.icon"
             />
               <div class="resource-name">{{ resource.name }}</div>
-
-
           </a-card-grid>
           </a>
         </a-card>
