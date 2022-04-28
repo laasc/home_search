@@ -19,7 +19,8 @@
           @focus="setMaskOpen"
           @blur="maskOpen = false"
       />
-      <div class="search_tips" :class="maskOpen?'mask_tips':''">tips: 按 Ctrl 键自动对焦搜索框，再次按 Ctrl 键解除搜索框对焦，按 Enter 键自动搜索</div>
+      <div class="search_tips" :class="maskOpen?'mask_tips':''">tips: 按 Ctrl 键自动对焦搜索框，再次按 Ctrl 键解除搜索框对焦，按 Enter 键自动搜索
+      </div>
     </div>
 
     <!-- 快捷卡 -->
@@ -27,14 +28,14 @@
       <div class="card_fast">
         <a-card>
           <a :href="resource.link" target="_blank" v-for="(resource, index) in linkDataList" :key="index">
-          <a-card-grid style="width:25%;text-align:center" >
+            <a-card-grid style="width:25%;text-align:center">
 
-            <a-avatar
-                shape="square"
-                :src="resource.icon"
-            />
+              <a-avatar
+                  shape="square"
+                  :src="resource.icon"
+              />
               <div class="resource-name">{{ resource.name }}</div>
-          </a-card-grid>
+            </a-card-grid>
           </a>
         </a-card>
       </div>
@@ -42,14 +43,15 @@
 
 
     <div class="fix_group">
-      <a-switch checked-children="白底" un-checked-children="透明" default-checked />
-      <a-tooltip placement="top" >
+      <a-switch checked-children="白底" un-checked-children="透明" default-checked/>
+      <a-tooltip placement="top">
         <template slot="title">
           <span>切换背景图</span>
         </template>
-        <a-button @click="development" type="primary" shape="round" icon="picture" size="small" style="margin-left:12px;"/>
+        <a-button @click="development" type="primary" shape="round" icon="picture" size="small"
+                  style="margin-left:12px;"/>
       </a-tooltip>
-      <a-tooltip placement="top" >
+      <a-tooltip placement="top">
         <template slot="title">
           <span>设为主页</span>
         </template>
@@ -57,9 +59,13 @@
       </a-tooltip>
 
     </div>
+    <iframe v-if="true" class="bg_img" width="100%" height="100%" src="https://home.myfanfou.cn/static/dynamic/cover-01/index.html"
+            frameborder="0"></iframe>
+    <img v-else class="bg_img" src="../../../static/comic/cover_7.jpg" alt="bg">
 
     <div :class="maskOpen?'mask':'hidden'"></div>
-    <img class="bg_img" src="../../../static/comic/cover_7.jpg" alt="bg">
+
+
   </div>
 </template>
 
@@ -93,10 +99,10 @@ export default {
     },
     // 设置聚焦背景
     setMaskOpen() {
-      if(this.maskOpen) {
+      if (this.maskOpen) {
         this.$refs.search_input.blur();
         this.maskOpen = false
-      }else {
+      } else {
         this.$refs.search_input.focus();
         this.maskOpen = true
       }
