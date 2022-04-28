@@ -1,5 +1,5 @@
 <template>
-  <div class="card_wrapper" :class="!isGhostStyle?'ghost':''">
+  <div class="card_wrapper" :class="isGhostStyle?'':'ghost'">
     <!-- 搜索logo -->
     <div class="search_logo_container">
       <img class="search_logo" @click="changeSearchLogo" v-if="isBaidu" src="~@/assets/images/baidu.png" alt="百度">
@@ -43,7 +43,7 @@
 
 
     <div class="fix_group">
-      <a-switch checked-children="白底" @change="changeSwitch" un-checked-children="透明" default-checked/>
+      <a-switch checked-children="白底" @change="changeSwitch" un-checked-children="透明" :checked="isGhostStyle"/>
       <a-tooltip placement="top">
         <template slot="title">
           <span>切换背景图</span>
@@ -74,6 +74,7 @@
 import defaultHome from "@/constant/defaultHome";
 
 import {COVER_HOST} from "../../tool/imgBase";
+import {delLocalStorage, getLocalStorage, setLocalStorage} from "../../utils/stroage";
 export default {
   name: "Home",
   data() {
@@ -83,18 +84,28 @@ export default {
       maskOpen: false, // mask
       baseUrl: COVER_HOST,
       linkDataList: defaultHome.keyContentMap.myLike,
-      isGhostStyle: true, // 是否选中透明背景
+      isGhostStyle: false, // 是否选中白色背景背景
       iframeUslBase: "/cover-01/index.html"
     }
   },
   created() {
     this.handlerFocusSearch()
+    if(getLocalStorage("ghost_style")) {
+      this.isGhostStyle = getLocalStorage("ghost_style") === 1
+    }
+
+  },
+  mounted() {
+    this.$nextTick(() => {
+      setLocalStorage("ghost_style", this.isGhostStyle?1:0)
+    })
   },
   methods: {
     // 切换透明度
     changeSwitch(e) {
-      console.log(e)
       this.isGhostStyle = e;
+      // 设置当前机器配置
+      setLocalStorage("ghost_style", e?1:0)
     },
     // 按ctrl focus聚焦搜索框
     handlerFocusSearch() {
