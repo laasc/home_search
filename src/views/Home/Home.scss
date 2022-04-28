@@ -91,11 +91,11 @@
     filter: none;
   }
 
-  /deep/ .ant-card-grid:hover .resource-name {
+  /deep/ .ant-card-grid:hover .resource_name {
     color: #1890ff;
   }
 
-  .resource-name {
+  .resource_name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -189,7 +189,7 @@
 
 
   @media screen and (max-width: 480px) {
-    .resource-name {
+    .resource_name {
       display: none;
     }
   }

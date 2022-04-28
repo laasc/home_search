@@ -2,13 +2,13 @@
  * 网站域名
  * @type {string}
  */
-export const WEB_HOST = 'https://www.code-nav.cn';
+export const WEB_HOST = 'https://home.myfanfou.cn';
 
 /**
  * 封面域名
  * @type {string}
  */
-export const COVER_HOST = 'https://home.myfanfou/img';
+export const COVER_HOST = 'https://home.myfanfou.cn/static/dynamic';
 
 /**
  * GitHub 地址

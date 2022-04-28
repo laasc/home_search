@@ -1,5 +1,5 @@
 <template>
-  <div class="card_wrapper">
+  <div class="card_wrapper" :class="!isGhostStyle?'ghost':''">
     <!-- 搜索logo -->
     <div class="search_logo_container">
       <img class="search_logo" @click="changeSearchLogo" v-if="isBaidu" src="~@/assets/images/baidu.png" alt="百度">
@@ -34,7 +34,7 @@
                   shape="square"
                   :src="resource.icon"
               />
-              <div class="resource-name">{{ resource.name }}</div>
+              <div class="resource_name">{{ resource.name }}</div>
             </a-card-grid>
           </a>
         </a-card>
@@ -43,7 +43,7 @@
 
 
     <div class="fix_group">
-      <a-switch checked-children="白底" un-checked-children="透明" default-checked/>
+      <a-switch checked-children="白底" @change="changeSwitch" un-checked-children="透明" default-checked/>
       <a-tooltip placement="top">
         <template slot="title">
           <span>切换背景图</span>
@@ -51,20 +51,21 @@
         <a-button @click="development" type="primary" shape="round" icon="picture" size="small"
                   style="margin-left:12px;"/>
       </a-tooltip>
-      <a-tooltip placement="top">
-        <template slot="title">
-          <span>设为主页</span>
-        </template>
-        <a-button @click="development" type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>
-      </a-tooltip>
+<!--      <a-tooltip placement="top">-->
+<!--        <template slot="title">-->
+<!--          <span>设为主页</span>-->
+<!--        </template>-->
+<!--        <a-button @click="development" type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>-->
+<!--      </a-tooltip>-->
 
     </div>
-    <iframe v-if="true" class="bg_img" width="100%" height="100%" src="https://home.myfanfou.cn/static/dynamic/cover-01/index.html"
+
+
+    <iframe v-if="true" class="bg_img" width="100%" height="100%" :src=" baseUrl + iframeUslBase"
             frameborder="0"></iframe>
     <img v-else class="bg_img" src="../../../static/comic/cover_7.jpg" alt="bg">
 
     <div :class="maskOpen?'mask':'hidden'"></div>
-
 
   </div>
 </template>
@@ -72,6 +73,7 @@
 <script>
 import defaultHome from "@/constant/defaultHome";
 
+import {COVER_HOST} from "../../tool/imgBase";
 export default {
   name: "Home",
   data() {
@@ -79,13 +81,21 @@ export default {
       isBaidu: true,
       searchValue: "", //搜索框内容
       maskOpen: false, // mask
-      linkDataList: defaultHome.keyContentMap.myLike
+      baseUrl: COVER_HOST,
+      linkDataList: defaultHome.keyContentMap.myLike,
+      isGhostStyle: true, // 是否选中透明背景
+      iframeUslBase: "/cover-01/index.html"
     }
   },
   created() {
     this.handlerFocusSearch()
   },
   methods: {
+    // 切换透明度
+    changeSwitch(e) {
+      console.log(e)
+      this.isGhostStyle = e;
+    },
     // 按ctrl focus聚焦搜索框
     handlerFocusSearch() {
       let that = this;
@@ -139,6 +149,6 @@ export default {
 
 <style scoped lang="scss">
 @import './Home.scss';
-
+@import './ghost.css';
 
 </style>
