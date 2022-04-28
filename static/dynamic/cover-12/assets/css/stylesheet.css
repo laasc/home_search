@@ -1,7 +1,7 @@
-@font-face { font-family: "Digital"; src: url('../fonts/Adequate-ExtraLight.ttf'); }
-@font-face { font-family: "Micro"; src: url('../fonts/MicroExtendFLF.ttf'); }
+@font-face { font-family: "Digital"; src: url('static/dynamic/cover-12/assets/fonts/Adequate-ExtraLight.ttf'); }
+@font-face { font-family: "Micro"; src: url('static/dynamic/cover-12/assets/fonts/MicroExtendFLF.ttf'); }
 body {
-	background-image: url(../img/bg.jpg);
+	background-image: url(static/dynamic/cover-12/assets/img/bg.jpg);
 	background-size: cover;
 	background-position: top center;
 	background-color:#FFF;

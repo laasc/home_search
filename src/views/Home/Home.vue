@@ -59,7 +59,7 @@
     </div>
 
     <div :class="maskOpen?'mask':'hidden'"></div>
-    <img class="bg_img" src="~@/covers/comic/cover_7.jpg" alt="bg">
+    <img class="bg_img" src="../../../static/comic/cover_7.jpg" alt="bg">
   </div>
 </template>
 
