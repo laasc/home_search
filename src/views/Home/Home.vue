@@ -61,9 +61,9 @@
     </div>
 
 
-    <iframe v-if="true" class="bg_img" width="100%" height="100%" :src=" baseUrl + iframeUslBase"
+    <iframe v-if="isUserIframe" class="bg_img" width="100%" height="100%" :src=" baseUrl + iframeUrlBase"
             frameborder="0"></iframe>
-    <img v-else class="bg_img" src="../../../static/comic/cover_7.jpg" alt="bg">
+    <img v-else class="bg_img" :src="baseUrl + imageUrlBase" alt="bg">
 
     <div :class="maskOpen?'mask':'hidden'"></div>
 
@@ -83,9 +83,11 @@ export default {
       searchValue: "", //搜索框内容
       maskOpen: false, // mask
       baseUrl: COVER_HOST,
+      isUserIframe: true, //是否使用iframe
       linkDataList: defaultHome.keyContentMap.myLike,
       isGhostStyle: false, // 是否选中白色背景背景
-      iframeUslBase: "/cover-01/index.html"
+      iframeUrlBase: "/dynamic/cover-01/index.html",
+      imageUrlBase: "/comic/cover_7.jpg"
     }
   },
   created() {
