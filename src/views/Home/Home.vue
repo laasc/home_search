@@ -19,7 +19,7 @@
           @focus="setMaskOpen"
           @blur="maskOpen = false"
       />
-      <div class="search_tips" :class="maskOpen?'mask_tips':''">tips: 按 Ctrl 键自动对焦搜索框，再次按 Ctrl 键解除搜索框对焦，按 Enter 键自动搜索
+      <div class="search_tips" :class="maskOpen?'mask_tips':''">tips: 按 Ctrl + ~ 键自动对焦搜索框，再次按 Ctrl + ~ 键解除搜索框对焦，按 Enter 键自动搜索
       </div>
     </div>
 
@@ -112,9 +112,16 @@ export default {
     // 按ctrl focus聚焦搜索框
     handlerFocusSearch() {
       let that = this;
+      // eslint-disable-next-line no-unused-vars
+      let keyUp = false;
+      if(keyUp) return;
       document.onkeydown = function (event) {
         let e = event || window.event;
-        if (e.key === "Control") {
+        if ((e.ctrlKey)&&(e.keyCode === 192)) {
+          keyUp = true;
+          setTimeout(() => {
+            keyUp = false;
+          }, 1000)
           that.setMaskOpen()
         }
 
