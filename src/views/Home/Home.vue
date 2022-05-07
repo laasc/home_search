@@ -64,7 +64,7 @@
 
     <iframe v-if="iframeUrlBase.type === 'iframe'" class="bg_img" width="100%" height="100%" :src="iframeUrlBase.src"
             frameborder="0"></iframe>
-    <img v-else class="bg_img" :src="imageUrlBase.preview" alt="bg">
+    <img v-else class="bg_img" :src="iframeUrlBase.preview" alt="bg">
 
     <div :class="maskOpen?'mask':'hidden'"></div>
 
@@ -80,7 +80,7 @@
       <a-tabs :activeKey="darwsTabsActive" @change="callback">
         <a-tab-pane :tab="item.name" :key="index" v-for="(item, index) in tabDataList">
           <div class="tab_pane_box">
-            <div class="draw_img_box" @click="changeBgImg(items, item)" v-for="(items, key) in item.list" :key="key">
+            <div class="draw_img_box" @click="changeBgImg(items)" v-for="(items, key) in item.list" :key="key">
               <a-card-grid style="width:100%;height: 100%;padding: 0;">
                 <div class="draw_bg_img">
                   <img :src="items.preview" :alt="items.name">
@@ -119,7 +119,6 @@ export default {
       linkDataList: defaultHome.keyContentMap.myLike,
       isGhostStyle: false, // 是否选中白色背景背景
       iframeUrlBase: DEFAULT_COVER,
-      imageUrlBase: "/comic/cover_7.jpg",
       visible: false,
       tabDataList: dataList
     }
@@ -129,7 +128,7 @@ export default {
     if (getLocalStorage("ghost_style")) {
       this.isGhostStyle = getLocalStorage("ghost_style") === "currentWhite";
     }
-    if(getLocalStorage("currentImage")) {
+    if(getLocalStorage("currentImage").preview) {
       this.iframeUrlBase = getLocalStorage("currentImage")
     }
 
@@ -145,10 +144,10 @@ export default {
       window.open(`https://myfanfou.top`);
     },
     // 点选背景图片
-    changeBgImg(items, item) {
-      console.log(items)
+    changeBgImg(items) {
       this.iframeUrlBase = {...items}
       setLocalStorage("currentImage", items)
+      this.visible = false;
       this.$forceUpdate();
     },
     // 切换抽屉tab栏
