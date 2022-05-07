@@ -129,7 +129,9 @@ export default {
     if (getLocalStorage("ghost_style")) {
       this.isGhostStyle = getLocalStorage("ghost_style") === "currentWhite";
     }
-    if(getLocalStorage("currentImage"))
+    if(getLocalStorage("currentImage")) {
+      this.iframeUrlBase = getLocalStorage("currentImage")
+    }
 
   },
   mounted() {
