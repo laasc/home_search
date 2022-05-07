@@ -77,7 +77,7 @@
         :visible="visible"
         @close="onClose"
     >
-      <a-tabs :activeKey="darwsTabsActive" @change="callback">
+      <a-tabs :activeKey="drawsTabsActive" @change="callback">
         <a-tab-pane :tab="item.name" :key="index" v-for="(item, index) in tabDataList">
           <div class="tab_pane_box">
             <div class="draw_img_box" @click="changeBgImg(items)" v-for="(items, key) in item.list" :key="key">
@@ -111,7 +111,7 @@ export default {
   data() {
     return {
       isBaidu: true,
-      darwsTabsActive: 0,
+      drawsTabsActive: 0,
       searchValue: "", //搜索框内容
       maskOpen: false, // mask
       baseUrl: COVER_HOST,
@@ -152,7 +152,7 @@ export default {
     },
     // 切换抽屉tab栏
     callback(key) {
-      this.darwsTabsActive = key;
+      this.drawsTabsActive = key;
     },
     // 关闭抽屉
     onClose() {
