@@ -52,48 +52,21 @@
         <a-button @click="development" type="primary" shape="round" icon="picture" size="small"
                   style="margin-left:12px;"/>
       </a-tooltip>
-            <a-tooltip placement="top">
-              <template slot="title">
-                <span>博客主页</span>
-              </template>
-              <a-button @click="goBlog" type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>
-            </a-tooltip>
+<!--      <a-tooltip placement="top">-->
+<!--        <template slot="title">-->
+<!--          <span>设为主页</span>-->
+<!--        </template>-->
+<!--        <a-button @click="development" type="primary" shape="round" icon="home" size="small" style="margin-left:12px;"/>-->
+<!--      </a-tooltip>-->
 
     </div>
 
 
-    <iframe v-if="iframeUrlBase.type === 'iframe'" class="bg_img" width="100%" height="100%" :src="iframeUrlBase.src"
+    <iframe v-if="isUserIframe" class="bg_img" width="100%" height="100%" :src=" baseUrl + iframeUrlBase"
             frameborder="0"></iframe>
-    <img v-else class="bg_img" :src="iframeUrlBase.preview" alt="bg">
+    <img v-else class="bg_img" :src="baseUrl + imageUrlBase" alt="bg">
 
     <div :class="maskOpen?'mask':'hidden'"></div>
-
-    <a-drawer
-        title="背景图"
-        placement="right"
-        class="drawer_wrap"
-        :closable="false"
-        :width="720"
-        :visible="visible"
-        @close="onClose"
-    >
-      <a-tabs :activeKey="drawsTabsActive" @change="callback">
-        <a-tab-pane :tab="item.name" :key="index" v-for="(item, index) in tabDataList">
-          <div class="tab_pane_box">
-            <div class="draw_img_box" @click="changeBgImg(items)" v-for="(items, key) in item.list" :key="key">
-              <a-card-grid style="width:100%;height: 100%;padding: 0;">
-                <div class="draw_bg_img">
-                  <img :src="items.preview" :alt="items.name">
-                </div>
-                <div class="draw_bg_name">{{ items.name }}</div>
-              </a-card-grid>
-            </div>
-
-          </div>
-        </a-tab-pane>
-      </a-tabs>
-    </a-drawer>
-
 
   </div>
 </template>
@@ -102,81 +75,47 @@
 import defaultHome from "@/constant/defaultHome";
 
 import {COVER_HOST} from "../../tool/imgBase";
-import {getLocalStorage, setLocalStorage} from "../../utils/stroage";
-import dataList, {DEFAULT_COVER} from "@/constant/defaultTabPane";
-
-
+import {delLocalStorage, getLocalStorage, setLocalStorage} from "../../utils/stroage";
 export default {
   name: "Home",
   data() {
     return {
       isBaidu: true,
-      drawsTabsActive: 0,
       searchValue: "", //搜索框内容
       maskOpen: false, // mask
       baseUrl: COVER_HOST,
       isUserIframe: true, //是否使用iframe
       linkDataList: defaultHome.keyContentMap.myLike,
       isGhostStyle: false, // 是否选中白色背景背景
-      iframeUrlBase: DEFAULT_COVER,
-      visible: false,
-      tabDataList: dataList
+      iframeUrlBase: "/dynamic/cover-01/index.html",
+      imageUrlBase: "/comic/cover_7.jpg"
     }
   },
   created() {
     this.handlerFocusSearch()
-    if (getLocalStorage("ghost_style")) {
-      this.isGhostStyle = getLocalStorage("ghost_style") === "currentWhite";
-    }
-    if(getLocalStorage("currentImage").preview) {
-      this.iframeUrlBase = getLocalStorage("currentImage")
+    if(getLocalStorage("ghost_style")) {
+      this.isGhostStyle = getLocalStorage("ghost_style") === 1
     }
 
   },
   mounted() {
     this.$nextTick(() => {
-      setLocalStorage("ghost_style", this.isGhostStyle ? "currentWhite" : "currentGhost")
+      setLocalStorage("ghost_style", this.isGhostStyle?1:0)
     })
   },
   methods: {
-    // 跳转博客
-    goBlog() {
-      window.open(`https://myfanfou.top`);
-    },
-    // 点选背景图片
-    changeBgImg(items) {
-      this.iframeUrlBase = {...items}
-      setLocalStorage("currentImage", items)
-      this.visible = false;
-      this.$forceUpdate();
-    },
-    // 切换抽屉tab栏
-    callback(key) {
-      this.drawsTabsActive = key;
-    },
-    // 关闭抽屉
-    onClose() {
-      this.visible = false;
-    },
     // 切换透明度
     changeSwitch(e) {
       this.isGhostStyle = e;
       // 设置当前机器配置
-      setLocalStorage("ghost_style", e ? "currentWhite" : "currentGhost")
+      setLocalStorage("ghost_style", e?1:0)
     },
     // 按ctrl focus聚焦搜索框
     handlerFocusSearch() {
       let that = this;
-      // eslint-disable-next-line no-unused-vars
-      let keyUp = false;
-      if (keyUp) return;
       document.onkeydown = function (event) {
         let e = event || window.event;
-        if ((e.ctrlKey) && (e.keyCode === 192)) {
-          keyUp = true;
-          setTimeout(() => {
-            keyUp = false;
-          }, 1000)
+        if (e.key === "Control") {
           that.setMaskOpen()
         }
 
@@ -199,7 +138,7 @@ export default {
     },
 
     development() {
-      this.visible = true;
+      alert("别急，还在开发中")
     },
 
     // 搜索
@@ -225,43 +164,5 @@ export default {
 <style scoped lang="scss">
 @import './Home.scss';
 @import './ghost.css';
-
-.drawer_wrap {
-  .tab_pane_box {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-
-    .draw_img_box {
-      padding: 0 10px;
-      width: 25%;
-      min-height: 150px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-      cursor: pointer;
-
-      .draw_bg_img {
-        width: 100%;
-        height: 150px;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-
-      .draw_bg_name {
-        text-align: center;
-        margin: 5px 0;
-      }
-    }
-  }
-
-}
 
 </style>
